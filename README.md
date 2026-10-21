@@ -1,6 +1,6 @@
-# Typora Math Compat
+# Just Render It
 
-让复制到 Typora 的 LaTeX 公式直接显示、编辑和保存。
+兼容各种公式语法，让公式在 Typora 中正确渲染。
 
 安装时会自动检查版本和文件兼容性。
 
@@ -13,7 +13,7 @@
 
 ## 使用指南
 
-1. 从 [Releases](https://github.com/wmxxhb/typora-math-compat/releases/latest) 下载 **`typora-math-compat-v2.0.0.zip`**，完整解压。
+1. 从 [Releases](https://github.com/wmxxhb/just-render-it/releases/latest) 下载 ZIP 安装包，完整解压。
 2. 保存文档，退出所有 Typora 窗口。
 3. 双击 **`安装.cmd`**；若未自动找到 Typora，按提示粘贴 `Typora.exe` 的完整路径。
 4. 安装成功后重新打开 Typora，打开包内的 **`示例.md`** 查看效果。
