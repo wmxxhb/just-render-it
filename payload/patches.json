@@ -1,0 +1,103 @@
+{
+  "typora_version": "1.2.4",
+  "patch_version": "2.0.0",
+  "files": {
+    "window.html": {
+      "original_sha256": "4ef01412d9c3b53dd43798333e05e764accc5626645436108b917722b67694f0",
+      "patched_sha256": "abbfc5cb2e6058385a63a9006b5b605ad4990b2b809277dfd4401277facf4bc4"
+    },
+    "appsrc/window/frame.js": {
+      "original_sha256": "526960de549f619c093af6d25d86a75d45d2fe22e661ee59a819ab68c42c5749",
+      "patched_sha256": "9d3fdd2876a3cd93bf4123e89f9cf4102061aa218b7c3bd20438c55d1c7224d2"
+    }
+  },
+  "patches": [
+    {
+      "anchor": "else if(f=this.rules.escape2.exec(e))",
+      "replacement": "else if(!r.inline_math&&(f=window.TyporaMathCompat.inline(e)))b+=f[0].length,e=e.substring(f[0].length),w.push({type:\"inline_math\",text:Ce(f[1]),pattern:f[2],endPattern:f[3]}),o.hasContent=!0;else if(f=this.rules.escape2.exec(e))",
+      "count": 1
+    },
+    {
+      "anchor": "e.text+(e.pattern||\"$\")",
+      "replacement": "e.text+(e.endPattern||e.pattern||\"$\")",
+      "count": 1
+    },
+    {
+      "anchor": "<span class='md-after md-meta'>${e.pattern}</span><span class='md-math-after-sym'>",
+      "replacement": "<span class='md-after md-meta'>${e.endPattern||e.pattern}</span><span class='md-math-after-sym'>",
+      "count": 1
+    },
+    {
+      "anchor": "\"</span><span class='md-after md-meta'>\"+e.pattern+\"</span><span class='md-math-after-sym'>",
+      "replacement": "\"</span><span class='md-after md-meta'>\"+(e.endPattern||e.pattern)+\"</span><span class='md-math-after-sym'>",
+      "count": 1
+    },
+    {
+      "anchor": "File.option.enableInlineMath&&(d=0,e=e.replace(",
+      "replacement": "File.option.enableInlineMath&&(d=0,e=window.TyporaMathCompat.protectTable(e,c,a,s),d=c.length,e=e.replace(",
+      "count": 1
+    },
+    {
+      "anchor": "File.option.enableInlineMath&&(e=e.replace(/(^|[^\\\\])\\$[^$]*\\|[^$]*\\$/g,",
+      "replacement": "File.option.enableInlineMath&&(e=window.TyporaMathCompat.protectTable(e,i,t,n),r=i.length,e=e.replace(/(^|[^\\\\])\\$[^$]*\\|[^$]*\\$/g,",
+      "count": 1
+    },
+    {
+      "anchor": "if(e.match(this.remap?W:F)){",
+      "replacement": "if(e.match(this.remap?W:F)||/^\\s*\\\\\\[/.test(e)){",
+      "count": 1
+    },
+    {
+      "anchor": "if((n=e.match(_))&&(T=!1,!this.skips.math_block))",
+      "replacement": "if((n=window.TyporaMathCompat.blockStart(e,_))&&(T=!1,!this.skips.math_block))",
+      "count": 1
+    },
+    {
+      "anchor": "var te,ne,re=this.skips.enableStartMatch||!1;",
+      "replacement": "var te,ne,moduLatex=n[2]===\"latex\",re=this.skips.enableStartMatch||!1;",
+      "count": 1
+    },
+    {
+      "anchor": "if(n=this.lines[G].match(_)){ne=n[1],re=!0;break}",
+      "replacement": "if(n=window.TyporaMathCompat.blockEnd(this.lines[G],_,moduLatex)){ne=n[1],re=!0;break}",
+      "count": 1
+    },
+    {
+      "anchor": "type:a.math_block,in:this.nodeMap,tagBefore:te,tagAfter:ne,text:",
+      "replacement": "type:a.math_block,in:this.nodeMap,mathDelimiter:moduLatex?\"latex\":null,tagBefore:te,tagAfter:ne,text:",
+      "count": 1
+    },
+    {
+      "anchor": "\"tagBefore\",\"tagAfter\",\"noCloseTag\",\"empty\"",
+      "replacement": "\"tagBefore\",\"tagAfter\",\"mathDelimiter\",\"mathCompat\",\"noCloseTag\",\"empty\"",
+      "count": 1
+    },
+    {
+      "anchor": "case a.math_block:return c(i,this),this.get(\"tagBefore\")?i.push(\"$$ {\"+this.get(\"tagBefore\")+\"}\"):i.push(\"$$\"),",
+      "replacement": "case a.math_block:return c(i,this),this.get(\"tagBefore\")?i.push(\"$$ {\"+this.get(\"tagBefore\")+\"}\"):i.push(this.get(\"mathDelimiter\")===\"latex\"?\"\\\\[\":\"$$\"),",
+      "count": 1
+    },
+    {
+      "anchor": "this.get(\"tagAfter\")?i.push(\"$$ {\"+this.get(\"tagAfter\")+\"}\"):i.push(\"$$\"),",
+      "replacement": "this.get(\"tagAfter\")?i.push(\"$$ {\"+this.get(\"tagAfter\")+\"}\"):i.push(this.get(\"mathDelimiter\")===\"latex\"?\"\\\\]\":\"$$\"),",
+      "count": 1
+    },
+    {
+      "anchor": "if(!l){if(!this.skips.old_code",
+      "replacement": "if(!l){var moduBlock;if(!this.skips.math_block&&(moduBlock=window.TyporaMathCompat.readBlock(this.lines,this.ln)))return r=new o({type:a.math_block,in:this.nodeMap,mathCompat:moduBlock.meta,text:moduBlock.tex}),c.call(this,r),this.ln=moduBlock.end,u.call(this,r),p.call(this,!0),void f.call(this,r);if(!this.skips.old_code",
+      "count": 1
+    },
+    {
+      "anchor": "case a.math_block:return c(i,this),",
+      "replacement": "case a.math_block:if(this.get(\"mathCompat\"))return c(i,this),i=i.concat(window.TyporaMathCompat.serialize(this.get(\"text\"),this.get(\"mathCompat\"))),y(i,this,r.isType(this.get(\"after\"),a.paragraph)&&r.isType(this.get(\"before\"),a.paragraph)?0:void 0),i;return c(i,this),",
+      "count": 1
+    },
+    {
+      "anchor": "case u.math_block:return(e.get(\"ahead\")||0)+3+(e.get(\"text\").match(/\\n/g)||[]).length+",
+      "replacement": "case u.math_block:return(e.get(\"ahead\")||0)+(e.get(\"mathCompat\")?window.TyporaMathCompat.serialize(e.get(\"text\"),e.get(\"mathCompat\")).length:3+(e.get(\"text\").match(/\\n/g)||[]).length)+",
+      "count": 1
+    }
+  ],
+  "reference": "https://github.com/obgnail/typora_plugin",
+  "helper_sha256": "5166552e1c7dc4aa6adc2bfab012c9ebbd6c64f8855f2988d74573d662cb2418"
+}

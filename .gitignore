@@ -1,0 +1,13 @@
+dist/
+.test-work/
+__pycache__/
+*.pyc
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
+# Never commit private application fixtures or original backups.
+fixtures/
+resources/
+stage/
+modu-math-compat-backup/
